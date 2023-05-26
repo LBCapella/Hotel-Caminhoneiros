@@ -60,20 +60,82 @@ void mensgBoasVindas()
     printf("========================================================================\n\n\n");
 
     printf("                               SEJA BEM VINDO(A)                          \n\n\n");
-    
-    printf("========================================================================\n");
 
+    printf("========================================================================\n");
+    system("pause");
+    limpaTela();
 }
 
+void menuEscolha()
+{
+    printf("========================================================================\n\n\n");
+
+    printf("                      HOTEL CALIFORNIA CAMINHONEIROS                    \n\n\n");
+
+    printf("========================================================================\n\n");
+
+    printf("\t\t# Para acessar a lista de quartos vagos digite : 'A'\n");
+    printf("\t\t# Para fazer reserva digite : 'B'\n");
+    printf("\t\t# Para fazer checkin digite : 'C'\n");
+    printf("\t\t# Para efetuar uma troca de quarto digite : 'D'\n");
+    printf("\t\t# Para acessar o menu do restaurante digite : 'E'\n");
+    printf("\t\t# Para sair do programa digite : 'F'\n");
+}
+
+int escolha(char opcao)
+{
+    switch (opcao)
+    {
+    case 'A':
+    case 'a':
+        /* code */
+        break;
+
+    case 'B':
+    case 'b':
+        /* code */
+        break;
+
+    case 'C':
+    case 'c':
+        /* code */
+        break;
+
+    case 'D':
+    case 'd':
+        /* code */
+        break;
+
+    case 'E':
+    case 'e':
+        /* code */
+        break;
+
+    case 'F':
+    case 'f':
+        return 0;
+
+    default:
+        printf("Opcao digitada invalida, por favor tente novamente.");
+        break;
+    }
+}
 
 int main()
 {
+    char opcao;
     menuApresentacao();
     caminhao();
     printf("\n");
     mensgBoasVindas();
 
-
-
+    do
+    {
+        menuEscolha();
+        printf("\t\t# Digite a escolha: ");
+        scanf("%c",&opcao);
+        limpaTela();
+    } while (escolha(opcao));
+    
     return 0;
 }
