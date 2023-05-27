@@ -74,12 +74,21 @@ void menuEscolha()
 
     printf("========================================================================\n\n");
 
-    printf("\t\t# Para acessar a lista de quartos vagos digite : 'A'\n");
+    printf("\t\t# Para acessar o mapa de quartos vagos e ocupados digite : 'A'\n");
     printf("\t\t# Para fazer reserva digite : 'B'\n");
     printf("\t\t# Para fazer checkin digite : 'C'\n");
     printf("\t\t# Para efetuar uma troca de quarto digite : 'D'\n");
     printf("\t\t# Para acessar o menu do restaurante digite : 'E'\n");
-    printf("\t\t# Para sair do programa digite : 'F'\n");
+    printf("\t\t# Para fazer checkout digite : 'F'\n");
+    printf("\t\t# Para sair do programa digite : 'G'\n");
+}
+
+//para sair da funcao do case, apenas dê um if e pessa para pessoa escolher voltar para o menu ou não, se quiser ela só precisa apertar enter então terá o limpa tela ele sairá da função
+// e acabará no break; do switch, portanto voltando ao menu. Dê também uma opção para fechar o programa.
+
+int casoA ()
+{
+    
 }
 
 int escolha(char opcao)
@@ -113,6 +122,11 @@ int escolha(char opcao)
 
     case 'F':
     case 'f':
+        /* code */
+        break;
+
+    case 'G':
+    case 'g':
         return 0;
 
     default:
