@@ -86,9 +86,60 @@ void menuEscolha()
 //para sair da funcao do case, apenas dê um if e pessa para pessoa escolher voltar para o menu ou não, se quiser ela só precisa apertar enter então terá o limpa tela ele sairá da função
 // e acabará no break; do switch, portanto voltando ao menu. Dê também uma opção para fechar o programa.
 
-int casoA ()
+void casoA ()
 {
+    int detalhesQuarto;
+    do
+    {
+        printf("========================================================================\n\n\n");
+
+        printf("                      HOTEL CALIFORNIA CAMINHONEIROS                    \n\n\n");
+
+        printf("========================================================================\n\n");
+
+        printf("###########################################################################\n");
+        printf("#        Quartos        ||     Preço|Noite      ||   Disponibilidade      #\n");
+        printf("###########################################################################\n");
+        printf("1.Suite Dream Road      ||       350,00 R$      ||        VAGAS           #\n");
+        printf("2.Suite Diesel Oasis    ||       250,00 R$      ||        VAGAS           #\n");
+        printf("3.Quarto Trucker's Haven||       180,00 R$      ||        VAGAS           #\n");
+        printf("4.Quarto Midnight Drive ||       150,00 R$      ||        VAGAS           #\n");
+        
+        printf("Escolha uma para mais detalhes (0 para voltar ao menu): ");
+        scanf("%d",&detalhesQuarto);
+        getchar();
+
+        if (detalhesQuarto == 0)
+            break;
+        
+        switch (detalhesQuarto)
+        {
+        case 1:
+            //suiteDream();
+            break;
+        
+        case 2:
+            //suiteDiesel();
+            break;
+
+        case 3:
+            //quartoTrucker();
+            break;    
+        
+        case 4:
+           // quartoMidnight();
+
+        default:
+            printf("Opcao digitada invalida, por favor tente novamente.");
+            limpaTela();
+            break;
+        }
+    } while (1);
     
+    
+    system("pause");
+    limpaTela();
+
 }
 
 int escolha(char opcao)
@@ -97,7 +148,7 @@ int escolha(char opcao)
     {
     case 'A':
     case 'a':
-        /* code */
+        casoA();
         break;
 
     case 'B':
@@ -130,9 +181,11 @@ int escolha(char opcao)
         return 0;
 
     default:
-        printf("Opcao digitada invalida, por favor tente novamente.");
+        printf("Opcao digitada invalida, por favor tente novamente.\n");
+        limpaTela();
         break;
     }
+    return 1;
 }
 
 int main()
@@ -148,6 +201,7 @@ int main()
         menuEscolha();
         printf("\t\t# Digite a escolha: ");
         scanf("%c",&opcao);
+        getchar();
         limpaTela();
     } while (escolha(opcao));
     
