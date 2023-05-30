@@ -75,14 +75,14 @@ void menuEscolha()
 
     printf("========================================================================\n\n");
 
-    printf("\t\t# Para acessar o mapa de quartos vagos e ocupados digite : 'A'\n");
-    printf("\t\t# Para fazer reserva digite : 'B'\n");
-    printf("\t\t# Para fazer checkin digite : 'C'\n");
-    printf("\t\t# Para efetuar uma troca de quarto digite : 'D'\n");
-    printf("\t\t# Para acessar o menu do restaurante digite : 'E'\n");
-    printf("\t\t# Para fazer checkout digite : 'F'\n");
-    printf("\t\t# Para Ver a lista de reservas digite : 'G'\n");
-    printf("\t\t# Para sair do programa digite : 'H'\n");
+    printf("\t# Para acessar a lista de quartos e o mapa do hotel digite : 'A'\n");
+    printf("\t# Para fazer reserva digite : 'B'\n");
+    printf("\t# Para fazer checkin digite : 'C'\n");
+    printf("\t# Para efetuar uma troca de quarto digite : 'D'\n");
+    printf("\t# Para acessar o menu do restaurante digite : 'E'\n");
+    printf("\t# Para fazer checkout digite : 'F'\n");
+    printf("\t# Para Ver a lista de reservas digite : 'G'\n");
+    printf("\t# Para sair do programa digite : 'H'\n");
 }
 
 typedef struct //typedef é usado para gerar um apelido ao novo tipo de variável, o apelido no caso é "reserva", assim não precisa usar sempre struct reserva
