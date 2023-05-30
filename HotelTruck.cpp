@@ -89,52 +89,62 @@ typedef struct //typedef é usado para gerar um apelido ao novo tipo de variáve
 {
     char nome[50];
     int idade;
-    char vulgo[50];
+    char vulgo[100];
     char marcaCaminhao[50];
-    char placa[7];
-    int data;
+    char placa[10];
+    int cpf;
     int numeroCel;
-    int tipoQuarto;
     int andar, quarto;
 } reserva;
 
+//Definindo Constante para armazenar reservas:
+ #define MAX_RESERVAS 100
+ reserva reservas[MAX_RESERVAS];
+ int numeroReserva = 0;
 
-void tabelaQuartos(int quartosPorAndar ,int primeiroAndar, int segundoAndar)
+
+void tabelaQuartos()
 {
-    const int max_Quartos = quartosPorAndar;
-    const int max_Andares = segundoAndar - primeiroAndar + 1;
+    const int MAX_ANDARES = 21;
+    const int MAX_QUARTOS = 14;
 
-    char tabela[max_Andares][max_Quartos];
+    char tabela[MAX_ANDARES][MAX_QUARTOS];
+    
+    int i, j;
 
-    for ( int i = 0; i < max_Quartos; i++)
-    {
-        for ( int j = 0; j < max_Andares; j++)
-        {
-            tabela[i][j] = '-';
+    for (i = 0; i < MAX_ANDARES; i++) {
+        for (j = 0; j < MAX_QUARTOS; j++) {
+            tabela[i][j] = '.';
         }
     }
 
-    printf("Quartos ");
-    for (int i = primeiroAndar; i <= segundoAndar; i++)
+    for ( i = 0; i < numeroReserva; i++)
     {
-        printf("  Andar:%d",i);
+        reserva r = reservas[i];
+        tabela[r.andar][r.quarto - 1] = 'R';
     }
+    
 
+    printf("\tMapa dos quartos:\n\n");
+
+    printf("   ");
+    for (j = 0; j < 14; j++) {
+        printf("%2d ", j + 1);
+    }
     printf("\n");
 
-    for (int i = 0; i < max_Quartos; i++)
-    {
-        printf("%d ->\t",i + 1);
-
-        for (int j = 0; j < max_Andares; j++)
-        {
-            printf("    %c    ",tabela[i][j]);
+    for (i = MAX_ANDARES - 1 ; i > 0; i--) {
+        printf("%2d ", i);
+        for (j = 0; j < MAX_QUARTOS; j++) {
+            printf("%2c ", tabela[i][j]);
         }
         printf("\n");
     }
+    printf("\n");
+
 }
 
-int quartos (char nome[], int valor, int quartosPorAndar ,int primeiroAndar, int segundoAndar)
+void quartos (char nome[], int valor,int primeiroAndar, int segundoAndar)
 {
     printf("========================================================================\n\n\n");
 
@@ -146,9 +156,9 @@ int quartos (char nome[], int valor, int quartosPorAndar ,int primeiroAndar, int
 
     printf("PRECO: %d\n", valor);
 
-    printf("Quartos do andar %d ao %d, segue o mapa (Quarto x Andar) de quartos e vagas disponíveis:\n\n",primeiroAndar, segundoAndar);
+    printf("Possui quartos do andar %d ao %d\n",primeiroAndar,segundoAndar);
 
-    tabelaQuartos(quartosPorAndar, primeiroAndar, segundoAndar);
+    tabelaQuartos();
 
     system("pause");
     limpaTela();
@@ -158,7 +168,7 @@ void casoA ()
 {
     int detalhesQuarto;
     char nomeQuarto[50];
-    int preco, quartosPorAndar;
+    int preco;
     int primeiroAndar, segundoAndar;
     do
     {
@@ -189,39 +199,35 @@ void casoA ()
             limpaTela();
             strcpy(nomeQuarto, "Suite Dream Road");
             preco = 350; 
-            quartosPorAndar = 4;
-            primeiroAndar = 10;
-            segundoAndar = 12;
-            quartos(nomeQuarto, preco, quartosPorAndar, primeiroAndar, segundoAndar);
+            primeiroAndar = 16;
+            segundoAndar = 20;
+            quartos(nomeQuarto, preco, primeiroAndar, segundoAndar);
             break;
         
         case 2:
             limpaTela();
             strcpy(nomeQuarto, "Suite Diesel Oasis");
             preco = 250; 
-            quartosPorAndar = 5;
-            primeiroAndar = 7;
-            segundoAndar = 9;
-            quartos(nomeQuarto, preco, quartosPorAndar, primeiroAndar, segundoAndar);
+            primeiroAndar = 11;
+            segundoAndar = 15;
+            quartos(nomeQuarto, preco, primeiroAndar, segundoAndar);
             break;
 
         case 3:
             limpaTela();
             strcpy(nomeQuarto, "Suite Diesel Oasis");
             preco = 180; 
-            quartosPorAndar = 5;
-            primeiroAndar = 4;
-            segundoAndar = 6;
-            quartos(nomeQuarto, preco, quartosPorAndar, primeiroAndar, segundoAndar);
+            primeiroAndar = 6;
+            segundoAndar = 10;
+            quartos(nomeQuarto, preco, primeiroAndar, segundoAndar);
             break;    
         
         case 4:
             limpaTela();
             preco = 150; 
-            quartosPorAndar = 5;
             primeiroAndar = 1;
-            segundoAndar = 3;
-            quartos(nomeQuarto, preco, quartosPorAndar, primeiroAndar, segundoAndar);
+            segundoAndar = 5;
+            quartos(nomeQuarto, preco, primeiroAndar, segundoAndar);
             break;
             
         default:
@@ -233,12 +239,6 @@ void casoA ()
     system("pause");
     limpaTela();
 }
-
- //Definindo Constante para armazenar reservas:
- #define MAX_RESERVAS 100
- reserva reservas[MAX_RESERVAS];
- int numeroReserva = 0;
-
 
 void casoB()
 {
@@ -255,27 +255,24 @@ void casoB()
     printf("------------------------------------------------------------------------\n\n");
     
     printf("Digite seu nome: ");
-    gets(novaReserva.nome);
+    fgets(novaReserva.nome, sizeof(novaReserva.nome), stdin);
     printf("Digite sua idade: ");
-    scanf("%d",&novaReserva.idade);
+    scanf("%d", &novaReserva.idade);
     getchar();
     printf("Digite seu vulgo(Ex:Carreta Furacao): ");
-    gets(novaReserva.vulgo);
+    fgets(novaReserva.vulgo, sizeof(novaReserva.vulgo), stdin);
     printf("Digite a marca do Caminhao: ");
-    gets(novaReserva.marcaCaminhao);
+    fgets(novaReserva.marcaCaminhao, sizeof(novaReserva.marcaCaminhao), stdin);
     printf("Digite a placa do mesmo: ");
-    gets(novaReserva.placa);
-    printf("Digite a data que ira se hospedar: ");
-    scanf("%d",&novaReserva.data);
+    fgets(novaReserva.placa, sizeof(novaReserva.placa), stdin);
+    printf("Digite o cpf que ira se hospedar: ");
+    scanf("%d", &novaReserva.cpf);
     getchar();
     printf("Digite o numero para contato: ");
-    scanf("%d",&novaReserva.numeroCel);
-    getchar();
-    printf("Agora diga quais dos quartos escolheu: ");
-    scanf("%d",&novaReserva.quarto);
+    scanf("%d", &novaReserva.numeroCel);
     getchar();
     printf("Diga o andar e o quarto(Ex: 1 3): ");
-    scanf("%d,%d", &novaReserva.andar,&novaReserva.quarto);
+    scanf("%d %d", &novaReserva.andar, &novaReserva.quarto);
     getchar();
 
     reservas[numeroReserva] = novaReserva; 
