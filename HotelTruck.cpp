@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 void menuApresentacao()
 {
@@ -83,12 +84,71 @@ void menuEscolha()
     printf("\t\t# Para sair do programa digite : 'G'\n");
 }
 
-//para sair da funcao do case, apenas dê um if e pessa para pessoa escolher voltar para o menu ou não, se quiser ela só precisa apertar enter então terá o limpa tela ele sairá da função
-// e acabará no break; do switch, portanto voltando ao menu. Dê também uma opção para fechar o programa.
+
+
+void tabelaQuartos(int quartosPorAndar ,int primeiroAndar, int segundoAndar)
+{
+    const int max_Quartos = quartosPorAndar;
+    const int max_Andares = segundoAndar - primeiroAndar + 1;
+
+    char tabela[max_Andares][max_Quartos];
+
+    for ( int i = 0; i < max_Quartos; i++)
+    {
+        for ( int j = 0; j < max_Andares; j++)
+        {
+            tabela[i][j] = '-';
+        }
+    }
+    //logica para marcar quarto já reservado
+    printf("Quartos ");
+    for (int i = primeiroAndar; i <= segundoAndar; i++)
+    {
+        printf("  Andar:%d",i);
+    }
+
+    printf("\n");
+
+    for (int i = 0; i < max_Quartos; i++)
+    {
+        printf("%d ->\t",i + 1);
+
+        for (int j = 0; j < max_Andares; j++)
+        {
+            printf("    %c    ",tabela[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+
+
+int quartos (char nome[], int valor, int quartosPorAndar ,int primeiroAndar, int segundoAndar)
+{
+    printf("========================================================================\n\n\n");
+
+    printf("                      HOTEL CALIFORNIA CAMINHONEIROS                    \n\n\n");
+
+    printf("========================================================================\n\n");
+
+    printf("NOME DO QUARTO:%s\n",nome );
+
+    printf("PRECO: %d\n", valor);
+
+    printf("Quartos do andar %d ao %d, segue o mapa (Quarto x Andar) de quartos e vagas disponíveis:\n\n",primeiroAndar, segundoAndar);
+
+    tabelaQuartos(quartosPorAndar, primeiroAndar, segundoAndar);
+
+    system("pause");
+    limpaTela();
+}
 
 void casoA ()
 {
     int detalhesQuarto;
+    char nomeQuarto[50];
+    int preco, quartosPorAndar;
+    int primeiroAndar, segundoAndar;
     do
     {
         printf("========================================================================\n\n\n");
@@ -98,7 +158,7 @@ void casoA ()
         printf("========================================================================\n\n");
 
         printf("###########################################################################\n");
-        printf("#        Quartos        ||     Preço|Noite      ||   Disponibilidade      #\n");
+        printf("#        Quartos        ||     Preco|Noite      ||   Disponibilidade      #\n");
         printf("###########################################################################\n");
         printf("1.Suite Dream Road      ||       350,00 R$      ||        VAGAS           #\n");
         printf("2.Suite Diesel Oasis    ||       250,00 R$      ||        VAGAS           #\n");
@@ -115,32 +175,55 @@ void casoA ()
         switch (detalhesQuarto)
         {
         case 1:
-            //suiteDream();
+            limpaTela();
+            strcpy(nomeQuarto, "Suite Dream Road");
+            preco = 350; 
+            quartosPorAndar = 4;
+            primeiroAndar = 10;
+            segundoAndar = 12;
+            quartos(nomeQuarto, preco, quartosPorAndar, primeiroAndar, segundoAndar);
             break;
         
         case 2:
-            //suiteDiesel();
+            limpaTela();
+            strcpy(nomeQuarto, "Suite Diesel Oasis");
+            preco = 250; 
+            quartosPorAndar = 5;
+            primeiroAndar = 7;
+            segundoAndar = 9;
+            quartos(nomeQuarto, preco, quartosPorAndar, primeiroAndar, segundoAndar);
             break;
 
         case 3:
-            //quartoTrucker();
+            limpaTela();
+            strcpy(nomeQuarto, "Suite Diesel Oasis");
+            preco = 180; 
+            quartosPorAndar = 5;
+            primeiroAndar = 4;
+            segundoAndar = 6;
+            quartos(nomeQuarto, preco, quartosPorAndar, primeiroAndar, segundoAndar);
             break;    
         
         case 4:
-           // quartoMidnight();
-
+            limpaTela();
+            preco = 150; 
+            quartosPorAndar = 5;
+            primeiroAndar = 1;
+            segundoAndar = 3;
+            quartos(nomeQuarto, preco, quartosPorAndar, primeiroAndar, segundoAndar);
+            break;
+            
         default:
             printf("Opcao digitada invalida, por favor tente novamente.");
             limpaTela();
             break;
         }
     } while (1);
-    
-    
     system("pause");
     limpaTela();
-
 }
+    
+
 
 int escolha(char opcao)
 {
