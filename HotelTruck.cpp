@@ -81,9 +81,22 @@ void menuEscolha()
     printf("\t\t# Para efetuar uma troca de quarto digite : 'D'\n");
     printf("\t\t# Para acessar o menu do restaurante digite : 'E'\n");
     printf("\t\t# Para fazer checkout digite : 'F'\n");
-    printf("\t\t# Para sair do programa digite : 'G'\n");
+    printf("\t\t# Para Ver a lista de reservas digite : 'G'\n");
+    printf("\t\t# Para sair do programa digite : 'H'\n");
 }
 
+typedef struct //typedef é usado para gerar um apelido ao novo tipo de variável, o apelido no caso é "reserva", assim não precisa usar sempre struct reserva
+{
+    char nome[50];
+    int idade;
+    char vulgo[50];
+    char marcaCaminhao[50];
+    char placa[7];
+    int data;
+    int numeroCel;
+    int tipoQuarto;
+    int andar, quarto;
+} reserva;
 
 
 void tabelaQuartos(int quartosPorAndar ,int primeiroAndar, int segundoAndar)
@@ -100,7 +113,7 @@ void tabelaQuartos(int quartosPorAndar ,int primeiroAndar, int segundoAndar)
             tabela[i][j] = '-';
         }
     }
-    //logica para marcar quarto já reservado
+
     printf("Quartos ");
     for (int i = primeiroAndar; i <= segundoAndar; i++)
     {
@@ -120,8 +133,6 @@ void tabelaQuartos(int quartosPorAndar ,int primeiroAndar, int segundoAndar)
         printf("\n");
     }
 }
-
-
 
 int quartos (char nome[], int valor, int quartosPorAndar ,int primeiroAndar, int segundoAndar)
 {
@@ -222,8 +233,86 @@ void casoA ()
     system("pause");
     limpaTela();
 }
-    
 
+ //Definindo Constante para armazenar reservas:
+ #define MAX_RESERVAS 100
+ reserva reservas[MAX_RESERVAS];
+ int numeroReserva = 0;
+
+
+void casoB()
+{
+    reserva novaReserva;
+
+    printf("========================================================================\n\n\n");
+
+    printf("                      HOTEL CALIFORNIA CAMINHONEIROS                    \n\n\n");
+
+    printf("========================================================================\n\n");
+
+    printf("Preencha as informacoes abaixo:\n\n");
+
+    printf("------------------------------------------------------------------------\n\n");
+    
+    printf("Digite seu nome: ");
+    gets(novaReserva.nome);
+    printf("Digite sua idade: ");
+    scanf("%d",&novaReserva.idade);
+    getchar();
+    printf("Digite seu vulgo(Ex:Carreta Furacao): ");
+    gets(novaReserva.vulgo);
+    printf("Digite a marca do Caminhao: ");
+    gets(novaReserva.marcaCaminhao);
+    printf("Digite a placa do mesmo: ");
+    gets(novaReserva.placa);
+    printf("Digite a data que ira se hospedar: ");
+    scanf("%d",&novaReserva.data);
+    getchar();
+    printf("Digite o numero para contato: ");
+    scanf("%d",&novaReserva.numeroCel);
+    getchar();
+    printf("Agora diga quais dos quartos escolheu: ");
+    scanf("%d",&novaReserva.quarto);
+    getchar();
+    printf("Diga o andar e o quarto(Ex: 1 3): ");
+    scanf("%d,%d", &novaReserva.andar,&novaReserva.quarto);
+    getchar();
+
+    reservas[numeroReserva] = novaReserva; 
+    numeroReserva++;
+}
+
+void casoG()
+{
+    printf("========================================================================\n\n\n");
+
+    printf("                      HOTEL CALIFORNIA CAMINHONEIROS                    \n\n\n");
+
+    printf("========================================================================\n\n");
+
+    if (numeroReserva == 0)
+    {
+        printf("Nenhuma reserva encontrada...");
+        system("pause");
+    }
+
+    else
+    {
+        printf("RESERVAS:\n");
+        for (int i = 0; i < numeroReserva; i++)
+        {
+            reserva feitas = reservas[i];
+            printf("Reserva numero: %d\n",i+1);
+            printf("nome:%s\n",feitas.nome);
+            printf("vulgo:%s\n",feitas.vulgo);
+            printf("idade:%d\n",feitas.idade);
+            printf("%d Andar, quarto %d\n",feitas.andar,feitas.quarto);
+            printf("---------------------------------------------------------\n");
+        }
+        system("pause");
+    }
+    limpaTela();
+}
 
 int escolha(char opcao)
 {
@@ -236,7 +325,7 @@ int escolha(char opcao)
 
     case 'B':
     case 'b':
-        /* code */
+        casoB();
         break;
 
     case 'C':
@@ -261,6 +350,11 @@ int escolha(char opcao)
 
     case 'G':
     case 'g':
+        casoG();
+        break;    
+
+    case 'H':
+    case 'h':
         return 0;
 
     default:
