@@ -98,7 +98,7 @@ typedef struct //typedef é usado para gerar um apelido ao novo tipo de variáve
 } reserva;
 
 //Definindo Constante para armazenar reservas:
- #define MAX_RESERVAS 100
+ #define MAX_RESERVAS 280
  reserva reservas[MAX_RESERVAS];
  int numeroReserva = 0;
 
@@ -185,6 +185,7 @@ void casoA ()
         printf("2.Suite Diesel Oasis    ||       250,00 R$      ||        VAGAS           #\n");
         printf("3.Quarto Trucker's Haven||       180,00 R$      ||        VAGAS           #\n");
         printf("4.Quarto Midnight Drive ||       150,00 R$      ||        VAGAS           #\n");
+        printf("5.Ver o mapa de quartos, vazios e vagos do Hotel.                         #\n");
         
         printf("Escolha uma para mais detalhes (0 para voltar ao menu): ");
         scanf("%d",&detalhesQuarto);
@@ -230,13 +231,19 @@ void casoA ()
             quartos(nomeQuarto, preco, primeiroAndar, segundoAndar);
             break;
             
+        case 5:
+        	limpaTela();
+        	
+            
         default:
             printf("Opcao digitada invalida, por favor tente novamente.");
+            limpaTela();
+            tabelaQuartos();
+            system("pause");
             limpaTela();
             break;
         }
     } while (1);
-    system("pause");
     limpaTela();
 }
 
@@ -277,6 +284,7 @@ void casoB()
 
     reservas[numeroReserva] = novaReserva; 
     numeroReserva++;
+    limpaTela();
 }
 
 void casoG()
@@ -373,7 +381,7 @@ int main()
     do
     {
         menuEscolha();
-        printf("\t\t# Digite a escolha: ");
+        printf("\t# Digite a escolha: ");
         scanf("%c",&opcao);
         getchar();
         limpaTela();
