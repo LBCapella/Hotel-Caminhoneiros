@@ -233,12 +233,13 @@ void casoA ()
             
         case 5:
         	limpaTela();
-        	
+        	tabelaQuartos();
+        	system("pause");
+        	limpaTela();
+        	break;
             
         default:
-            printf("Opcao digitada invalida, por favor tente novamente.");
-            limpaTela();
-            tabelaQuartos();
+            printf("\nOpcao digitada invalida, por favor tente novamente.\n\n");
             system("pause");
             limpaTela();
             break;
@@ -364,6 +365,7 @@ int escolha(char opcao)
 
     default:
         printf("Opcao digitada invalida, por favor tente novamente.\n");
+        system("pause");
         limpaTela();
         break;
     }
