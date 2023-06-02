@@ -104,6 +104,7 @@ typedef struct //typedef é usado para gerar um apelido ao novo tipo de variáve
  #define MAX_RESERVAS 280
  reserva reservas[MAX_RESERVAS];
  int numeroReserva = 0;
+ reserva checkIN[MAX_RESERVAS];
 
 
 void tabelaQuartos()
@@ -123,8 +124,14 @@ void tabelaQuartos()
 
     for ( i = 0; i < numeroReserva; i++)
     {
+        reserva c = checkIN[i];
         reserva r = reservas[i];
         tabela[r.andar][r.quarto - 1] = 'R';
+        if (c.andar == r.andar && c.quarto == r.quarto)
+        {
+            tabela[c.andar][c.quarto - 1] = 'O';
+        }
+        
     }
     
 
@@ -356,22 +363,16 @@ int casoC()
             else
                 break;
         }
-        if (numeroReserva == 0)
-        {
-            printf("Nenhuma reserva encontrada...\n"
-                    "Pressione ENTER para voltar ao menu e efetuar a reserva.");
-            getchar();
-            return 0;
-        }
+
         else
         {
             printf("Comando invalido, tente novamente!\n");
+            limpaTela();
         }
     }
     
     int verificaCpf;
-    int cpfValido = 0;
-    reserva checkIN;
+    reserva checkin;
     int numeroCheckIN = -1; //para indicar que nenhuma reserva foi encontrada.
     
     while (numeroCheckIN == -1)
@@ -384,9 +385,10 @@ int casoC()
 
         for (int i = 0; i < numeroReserva; i++)
         {
-            checkIN = reservas[i];
+            checkin = reservas[i];
+            checkIN[i] = checkin;
 
-            if (verificaCpf == checkIN.cpf)
+            if (verificaCpf == checkin.cpf)
             {
                 numeroCheckIN = i;
                 break;
@@ -397,11 +399,13 @@ int casoC()
         {
             printf("\nCPF inválido, tente novamente!\n");
             getchar();
+            limpaTela();
+            return 0;
         }
     }
     
     bannerHotel();
-    printf("Muito bem, encontramos seu CPF na reserva, senhor(a) %s!\n", checkIN.nome);
+    printf("Muito bem, encontramos seu CPF na reserva, senhor(a) %s!\n", checkin.nome);
     
     while (1)
     {
