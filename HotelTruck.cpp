@@ -1,6 +1,3 @@
-//VDC-AtivXX - Hotel
-//Carlos Gouveia, Kauã Cordeiro, Luan Capella, Pedro Gabriel
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
