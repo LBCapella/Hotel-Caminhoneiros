@@ -1,6 +1,16 @@
+//VDC-AtivXX - Hotel
+//Carlos Gouveia, Kauã Cordeiro, Luan Capella, Pedro Gabriel
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+void bannerHotel()
+{
+    printf("========================================================================\n\n\n");
+    printf("                      HOTEL CALIFORNIA CAMINHONEIROS                    \n\n\n");
+    printf("========================================================================\n\n");
+}
 
 void menuApresentacao()
 {
@@ -69,11 +79,7 @@ void mensgBoasVindas()
 
 void menuEscolha()
 {
-    printf("========================================================================\n\n\n");
-
-    printf("                      HOTEL CALIFORNIA CAMINHONEIROS                    \n\n\n");
-
-    printf("========================================================================\n\n");
+    bannerHotel();
 
     printf("\t# Para acessar a lista de quartos e o mapa do hotel digite : 'A'\n");
     printf("\t# Para fazer reserva digite : 'B'\n");
@@ -98,9 +104,10 @@ typedef struct //typedef é usado para gerar um apelido ao novo tipo de variáve
 } reserva;
 
 //Definindo Constante para armazenar reservas:
- #define MAX_RESERVAS 100
+ #define MAX_RESERVAS 280
  reserva reservas[MAX_RESERVAS];
  int numeroReserva = 0;
+ reserva checkIN[MAX_RESERVAS];
 
 
 void tabelaQuartos()
@@ -120,8 +127,14 @@ void tabelaQuartos()
 
     for ( i = 0; i < numeroReserva; i++)
     {
+        reserva c = checkIN[i];
         reserva r = reservas[i];
         tabela[r.andar][r.quarto - 1] = 'R';
+        if (c.andar == r.andar && c.quarto == r.quarto)
+        {
+            tabela[c.andar][c.quarto - 1] = 'O';
+        }
+        
     }
     
 
@@ -146,11 +159,7 @@ void tabelaQuartos()
 
 void quartos (char nome[], int valor,int primeiroAndar, int segundoAndar)
 {
-    printf("========================================================================\n\n\n");
-
-    printf("                      HOTEL CALIFORNIA CAMINHONEIROS                    \n\n\n");
-
-    printf("========================================================================\n\n");
+    bannerHotel();
 
     printf("NOME DO QUARTO:%s\n",nome );
 
@@ -172,11 +181,7 @@ void casoA ()
     int primeiroAndar, segundoAndar;
     do
     {
-        printf("========================================================================\n\n\n");
-
-        printf("                      HOTEL CALIFORNIA CAMINHONEIROS                    \n\n\n");
-
-        printf("========================================================================\n\n");
+        bannerHotel();
 
         printf("###########################################################################\n");
         printf("#        Quartos        ||     Preco|Noite      ||   Disponibilidade      #\n");
@@ -185,6 +190,7 @@ void casoA ()
         printf("2.Suite Diesel Oasis    ||       250,00 R$      ||        VAGAS           #\n");
         printf("3.Quarto Trucker's Haven||       180,00 R$      ||        VAGAS           #\n");
         printf("4.Quarto Midnight Drive ||       150,00 R$      ||        VAGAS           #\n");
+        printf("5.Ver o mapa de quartos, vazios e vagos do Hotel.                         #\n");
         
         printf("Escolha uma para mais detalhes (0 para voltar ao menu): ");
         scanf("%d",&detalhesQuarto);
@@ -230,13 +236,20 @@ void casoA ()
             quartos(nomeQuarto, preco, primeiroAndar, segundoAndar);
             break;
             
+        case 5:
+        	limpaTela();
+        	tabelaQuartos();
+        	system("pause");
+        	limpaTela();
+        	break;
+            
         default:
-            printf("Opcao digitada invalida, por favor tente novamente.");
+            printf("\nOpcao digitada invalida, por favor tente novamente.\n\n");
+            system("pause");
             limpaTela();
             break;
         }
     } while (1);
-    system("pause");
     limpaTela();
 }
 
@@ -244,11 +257,7 @@ void casoB()
 {
     reserva novaReserva;
 
-    printf("========================================================================\n\n\n");
-
-    printf("                      HOTEL CALIFORNIA CAMINHONEIROS                    \n\n\n");
-
-    printf("========================================================================\n\n");
+    bannerHotel();
 
     printf("Preencha as informacoes abaixo:\n\n");
 
@@ -256,36 +265,45 @@ void casoB()
     
     printf("Digite seu nome: ");
     fgets(novaReserva.nome, sizeof(novaReserva.nome), stdin);
+
     printf("Digite sua idade: ");
     scanf("%d", &novaReserva.idade);
     getchar();
+
     printf("Digite seu vulgo(Ex:Carreta Furacao): ");
     fgets(novaReserva.vulgo, sizeof(novaReserva.vulgo), stdin);
+
     printf("Digite a marca do Caminhao: ");
     fgets(novaReserva.marcaCaminhao, sizeof(novaReserva.marcaCaminhao), stdin);
+
     printf("Digite a placa do mesmo: ");
     fgets(novaReserva.placa, sizeof(novaReserva.placa), stdin);
+
     printf("Digite o cpf que ira se hospedar: ");
     scanf("%d", &novaReserva.cpf);
     getchar();
+
     printf("Digite o numero para contato: ");
     scanf("%d", &novaReserva.numeroCel);
     getchar();
+
     printf("Diga o andar e o quarto(Ex: 1 3): ");
     scanf("%d %d", &novaReserva.andar, &novaReserva.quarto);
     getchar();
 
     reservas[numeroReserva] = novaReserva; 
     numeroReserva++;
+
+    printf("\nReserva cadastrada com sucesso!\n");
+    printf("===============================================\n");
+    printf("Pressione Enter para voltar ao menu principal...");
+    getchar();
+    limpaTela();
 }
 
 void casoG()
 {
-    printf("========================================================================\n\n\n");
-
-    printf("                      HOTEL CALIFORNIA CAMINHONEIROS                    \n\n\n");
-
-    printf("========================================================================\n\n");
+    bannerHotel();
 
     if (numeroReserva == 0)
     {
@@ -303,6 +321,7 @@ void casoG()
             printf("nome:%s\n",feitas.nome);
             printf("vulgo:%s\n",feitas.vulgo);
             printf("idade:%d\n",feitas.idade);
+            printf("CPF:%d\n",feitas.cpf);
             printf("%d Andar, quarto %d\n",feitas.andar,feitas.quarto);
             printf("---------------------------------------------------------\n");
         }
@@ -310,6 +329,127 @@ void casoG()
     }
     limpaTela();
 }
+
+
+
+int casoC()
+{
+    char simNao;
+
+    while (1)
+    {
+        bannerHotel();
+        printf("Para efetuar o Checkin é necessário já possuir uma reserva.\n"
+               "Caso ainda nao tenha feito, peço que volte para o menu e efetue a mesma.\n");
+        printf("Caso ja tenha reserva, digite 'S'. Caso contrario, digite 'N': ");
+        
+        scanf(" %c", &simNao);
+        getchar();
+        
+        limpaTela();
+
+        if (simNao == 'N' || simNao == 'n')
+        {
+            return 0;
+        }
+        else if (simNao == 'S' || simNao == 's')
+        {
+            if (numeroReserva == 0)
+            {
+                printf("Nenhuma reserva encontrada...\n"
+                        "Pressione ENTER para voltar ao menu e efetuar a reserva.");
+                getchar();
+                limpaTela();
+                return 0;
+            }
+
+            else
+                break;
+        }
+
+        else
+        {
+            printf("Comando invalido, tente novamente!\n");
+            limpaTela();
+        }
+    }
+    
+    int verificaCpf;
+    reserva checkin;
+    int numeroCheckIN = -1; //para indicar que nenhuma reserva foi encontrada.
+    
+    while (numeroCheckIN == -1)
+    {
+        bannerHotel();
+        printf("Digite o número do CPF feito na reserva: ");
+        scanf("%d", &verificaCpf);
+        getchar();
+        limpaTela();
+
+        for (int i = 0; i < numeroReserva; i++)
+        {
+            checkin = reservas[i];
+            checkIN[i] = checkin;
+
+            if (verificaCpf == checkin.cpf)
+            {
+                numeroCheckIN = i;
+                break;
+            }
+        }
+
+        if (numeroCheckIN == -1)
+        {
+            printf("\nCPF inválido, tente novamente!\n");
+            getchar();
+            limpaTela();
+            return 0;
+        }
+    }
+    
+    bannerHotel();
+    printf("Muito bem, encontramos seu CPF na reserva, senhor(a) %s!\n", checkin.nome);
+    
+    while (1)
+    {
+        printf("Você gostaria de efetuar o Check-in? (S para sim, N para nao): ");
+        scanf(" %c", &simNao);
+        getchar();
+
+        if (simNao == 'N' || simNao == 'n')
+        {
+            printf("\nPois bem, estaremos retirando a sua reserva.\n");
+            
+            // Remover a reserva encontrada
+            for (int i = numeroCheckIN; i < numeroReserva - 1; i++)
+            {
+                reservas[i] = reservas[i + 1];
+            }
+            numeroReserva--;
+            
+            printf("Reserva removida com sucesso!\n");
+            getchar();
+            limpaTela();
+            break;
+        }
+        else if (simNao == 'S' || simNao == 's')
+        {
+            printf("\nCheck-in efetuado com sucesso!\n");
+            getchar();
+            limpaTela();
+            break;
+        }
+        else
+        {
+            printf("Comando invalido, tente novamente!\n");
+            getchar();
+            limpaTela();
+        }
+    }
+
+    return 1;
+}
+
 
 int escolha(char opcao)
 {
@@ -327,7 +467,7 @@ int escolha(char opcao)
 
     case 'C':
     case 'c':
-        /* code */
+        casoC();
         break;
 
     case 'D':
@@ -356,6 +496,7 @@ int escolha(char opcao)
 
     default:
         printf("Opcao digitada invalida, por favor tente novamente.\n");
+        system("pause");
         limpaTela();
         break;
     }
@@ -373,7 +514,7 @@ int main()
     do
     {
         menuEscolha();
-        printf("\t\t# Digite a escolha: ");
+        printf("\t# Digite a escolha: ");
         scanf("%c",&opcao);
         getchar();
         limpaTela();
