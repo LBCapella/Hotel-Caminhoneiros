@@ -1,3 +1,6 @@
+//VDC-AtivXX - Hotel
+//Carlos Gouveia, Kauã Cordeiro, Luan Capella, Pedro Gabriel
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -284,9 +287,33 @@ void casoB()
     scanf("%d", &novaReserva.numeroCel);
     getchar();
 
-    printf("Diga o andar e o quarto(Ex: 1 3): ");
-    scanf("%d %d", &novaReserva.andar, &novaReserva.quarto);
-    getchar();
+    int andarValido = 0;
+
+    while(!andarValido)
+    {
+        printf("Diga o andar e o quarto(Ex: 1 3): ");
+        scanf("%d %d", &novaReserva.andar, &novaReserva.quarto);
+        getchar();
+
+        if (novaReserva.andar < 1 || novaReserva.andar > 20) 
+        {
+            printf("\nAndar invalido! Tente novamente!\n");
+            system("pause");
+            limpaTela();
+        } 
+        
+        else if (novaReserva.quarto < 1 || novaReserva.quarto > 14) 
+        {
+            printf("\nQuarto invalido! Tente novamente!\n");
+            system("pause");
+            limpaTela();
+        } 
+        
+        else 
+        {
+            andarValido = 1; // Valor de andar/quarto válido, sai do loop
+        }
+    }
 
     reservas[numeroReserva] = novaReserva; 
     numeroReserva++;
@@ -296,6 +323,7 @@ void casoB()
     printf("Pressione Enter para voltar ao menu principal...");
     getchar();
     limpaTela();
+    
 }
 
 void casoG()
@@ -336,8 +364,8 @@ int casoC()
     while (1)
     {
         bannerHotel();
-        printf("Para efetuar o Checkin é necessário já possuir uma reserva.\n"
-               "Caso ainda nao tenha feito, peço que volte para o menu e efetue a mesma.\n");
+        printf("Para efetuar o Checkin e' necessario ja possuir uma reserva.\n"
+               "Caso ainda nao tenha feito, por favor volte para o menu e efetue a mesma.\n");
         printf("Caso ja tenha reserva, digite 'S'. Caso contrario, digite 'N': ");
         
         scanf(" %c", &simNao);
@@ -378,7 +406,7 @@ int casoC()
     while (numeroCheckIN == -1)
     {
         bannerHotel();
-        printf("Digite o número do CPF feito na reserva: ");
+        printf("Digite o numero do CPF feito na reserva: ");
         scanf("%d", &verificaCpf);
         getchar();
         limpaTela();
@@ -397,7 +425,7 @@ int casoC()
 
         if (numeroCheckIN == -1)
         {
-            printf("\nCPF inválido, tente novamente!\n");
+            printf("\nCPF invalido, tente novamente!\n");
             getchar();
             limpaTela();
             return 0;
