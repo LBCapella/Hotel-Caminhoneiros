@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+//checkout; checkIN sem reserva; Cancelar reserva;
+
 void bannerHotel()//Fun��o para apresentar o banner do hotel
 {
     printf("========================================================================\n\n\n");
@@ -84,7 +86,7 @@ void menuEscolha()//Fun��o para o menu de escolhas
     printf("\t# Para acessar a lista de quartos e o mapa do hotel digite : 'A'\n");
     printf("\t# Para fazer reserva digite : 'B'\n");
     printf("\t# Para fazer checkin digite : 'C'\n");
-    printf("\t# Para efetuar uma troca de quarto digite : 'D'\n");
+    printf("\t# Para Cancelar a reserva digite : 'D'\n");
     printf("\t# Para acessar o menu do restaurante digite : 'E'\n");
     printf("\t# Para fazer checkout digite : 'F'\n");
     printf("\t# Para Ver a lista de reservas digite : 'G'\n");
@@ -446,7 +448,7 @@ int casoC()//Fun��o para fazer chekin
             printf("\nPois bem, estaremos retirando a sua reserva.\n");
             
             // Remover a reserva encontrada
-            for (int i = numeroCheckIN; i < numeroReserva - 1; i++)
+            for (int i = numeroCheckIN; i < numeroReserva; i++)
             {
                 reservas[i] = reservas[i + 1];
             }
@@ -475,6 +477,61 @@ int casoC()//Fun��o para fazer chekin
     return 1;
 }
 
+int casoD()
+{
+    do
+    {
+        bannerHotel();
+        int verificaCpf;
+        char simNao;
+
+        printf("Gostaria de efetuar o cancelamento da reserva('S' para sim, 'N' para nao)? \n");
+        scanf("%c",&simNao);
+
+        if (simNao == 'S' || simNao == 's')
+            {
+                if (numeroReserva == 0)
+                {
+                    printf("Nenhuma reserva encontrada...\n"
+                            "Pressione ENTER para voltar ao menu e efetuar a reserva.");
+                    getchar();
+                    limpaTela();
+                    return 0;
+                }
+
+                else if (numeroReserva != 0)
+                {
+                    printf("Digite o numero do CPF feito na reserva: ");
+                    scanf("%d", &verificaCpf);
+                    getchar();
+                    //removendo reserva.
+                    for (int i = 0; i < numeroReserva; i++)
+                    {
+                        reserva r = reservas[i]; // uma variável para receber valores do reservas[i]
+                        if (verificaCpf == r.cpf)
+                        {
+                            for (int j = i; j < numeroReserva; j++)
+                            {
+                                reservas[j] = reservas[j + 1];
+                            }
+                            numeroReserva--;
+                        }
+                    }
+
+                    printf("Reserva removida com sucesso!\n");
+                    getchar();
+                    limpaTela();
+                    break;
+                }
+            }
+        
+
+
+    } while (1);
+
+    return 1;
+}
+
 
 int escolha(char opcao)//Fun��o para falar op��es de escolha
 {
@@ -497,6 +554,7 @@ int escolha(char opcao)//Fun��o para falar op��es de escolha
 
     case 'D':
     case 'd':
+        casoD();
         break;
 
     case 'E':
