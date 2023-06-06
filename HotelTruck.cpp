@@ -1,18 +1,18 @@
-//VDC-AtivXX - Hotel
-//Carlos Gouveia, Kauã Cordeiro, Luan Capella, Pedro Gabriel
+//VDC-Hotel-01
+//Carlos Gouveia, Kau� Cordeiro, Luan Capella, Pedro Gabriel
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-void bannerHotel()
+void bannerHotel()//Fun��o para apresentar o banner do hotel
 {
     printf("========================================================================\n\n\n");
     printf("                      HOTEL CALIFORNIA CAMINHONEIROS                    \n\n\n");
     printf("========================================================================\n\n");
 }
 
-void menuApresentacao()
+void menuApresentacao()//Fun��o para banner do menu para o in�cio do programa
 {
     printf("                **************************************************\n");
     printf("                *                                                *\n");
@@ -40,7 +40,7 @@ void caminhao()
     printf("    \\__/                   \\__/     \\__/                    \\__/      \\__/\n");
 }
 
-void limpaTela()
+void limpaTela()//Fun��o para limpar a tela
 {
     system("@cls||clear");
 }
@@ -77,7 +77,7 @@ void mensgBoasVindas()
     limpaTela();
 }
 
-void menuEscolha()
+void menuEscolha()//Fun��o para o menu de escolhas 
 {
     bannerHotel();
 
@@ -110,7 +110,7 @@ typedef struct //typedef é usado para gerar um apelido ao novo tipo de variáve
  reserva checkIN[MAX_RESERVAS];
 
 
-void tabelaQuartos()
+void tabelaQuartos()//Fun��o para mostrar o mapa do hotel 
 {
     const int MAX_ANDARES = 21;
     const int MAX_QUARTOS = 14;
@@ -157,7 +157,7 @@ void tabelaQuartos()
 
 }
 
-void quartos (char nome[], int valor,int primeiroAndar, int segundoAndar)
+void quartos (char nome[], int valor,int primeiroAndar, int segundoAndar)//Fun��o para tabela de quartos
 {
     bannerHotel();
 
@@ -173,7 +173,7 @@ void quartos (char nome[], int valor,int primeiroAndar, int segundoAndar)
     limpaTela();
 }
 
-void casoA ()
+void casoA ()//Fun��o para mostrar os quartos disponiveis
 {
     int detalhesQuarto;
     char nomeQuarto[50];
@@ -253,7 +253,7 @@ void casoA ()
     limpaTela();
 }
 
-void casoB()
+void casoB()//Fun��o para fazer o cadastro do hospede
 {
     reserva novaReserva;
 
@@ -357,7 +357,7 @@ void casoG()
 
 
 
-int casoC()
+int casoC()//Fun��o para fazer chekin
 {
     char simNao;
 
@@ -476,7 +476,7 @@ int casoC()
 }
 
 
-int escolha(char opcao)
+int escolha(char opcao)//Fun��o para falar op��es de escolha
 {
     switch (opcao)
     {
@@ -497,17 +497,14 @@ int escolha(char opcao)
 
     case 'D':
     case 'd':
-        /* code */
         break;
 
     case 'E':
     case 'e':
-        /* code */
         break;
 
     case 'F':
     case 'f':
-        /* code */
         break;
 
     case 'G':
@@ -528,7 +525,7 @@ int escolha(char opcao)
     return 1;
 }
 
-int main()
+int main()//Programa principal
 {
     char opcao;
     menuApresentacao();
