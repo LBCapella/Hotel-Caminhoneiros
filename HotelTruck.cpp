@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-//checkout; checkIN sem reserva; Cancelar reserva;
+//checkout; checkIN sem reserva;
 
 void bannerHotel()//Fun��o para apresentar o banner do hotel
 {
@@ -105,12 +105,78 @@ typedef struct //typedef é usado para gerar um apelido ao novo tipo de variáve
     int andar, quarto;
 } reserva;
 
+
 //Definindo Constante para armazenar reservas:
  #define MAX_RESERVAS 280
  reserva reservas[MAX_RESERVAS];
  int numeroReserva = 0;
  reserva checkIN[MAX_RESERVAS];
 
+void cadastroHospede()
+{
+    reserva novaReserva;
+
+    bannerHotel();
+
+    printf("Preencha as informacoes abaixo:\n\n");
+
+    printf("------------------------------------------------------------------------\n\n");
+    
+    printf("Digite seu nome: ");
+    fgets(novaReserva.nome, sizeof(novaReserva.nome), stdin);
+
+    printf("Digite sua idade: ");
+    scanf("%d", &novaReserva.idade);
+    getchar();
+
+    printf("Digite seu vulgo(Ex:Carreta Furacao): ");
+    fgets(novaReserva.vulgo, sizeof(novaReserva.vulgo), stdin);
+
+    printf("Digite a marca do Caminhao: ");
+    fgets(novaReserva.marcaCaminhao, sizeof(novaReserva.marcaCaminhao), stdin);
+
+    printf("Digite a placa do mesmo: ");
+    fgets(novaReserva.placa, sizeof(novaReserva.placa), stdin);
+
+    printf("Digite o cpf que ira se hospedar: ");
+    scanf("%d", &novaReserva.cpf);
+    getchar();
+
+    printf("Digite o numero para contato: ");
+    scanf("%d", &novaReserva.numeroCel);
+    getchar();
+
+    int andarValido = 0;
+
+    while(!andarValido)
+    {
+        printf("Diga o andar e o quarto(Ex: 1 3): ");
+        scanf("%d %d", &novaReserva.andar, &novaReserva.quarto);
+        getchar();
+
+        if (novaReserva.andar < 1 || novaReserva.andar > 20) 
+        {
+            printf("\nAndar invalido! Tente novamente!\n");
+            system("pause");
+            limpaTela();
+        } 
+        
+        else if (novaReserva.quarto < 1 || novaReserva.quarto > 14) 
+        {
+            printf("\nQuarto invalido! Tente novamente!\n");
+            system("pause");
+            limpaTela();
+        } 
+        
+        else 
+        {
+            andarValido = 1; // Valor de andar/quarto válido, sai do loop
+        }
+    }
+
+    reservas[numeroReserva] = novaReserva; 
+    numeroReserva++;
+}
 
 void tabelaQuartos()//Fun��o para mostrar o mapa do hotel 
 {
@@ -257,68 +323,7 @@ void casoA ()//Fun��o para mostrar os quartos disponiveis
 
 void casoB()//Fun��o para fazer o cadastro do hospede
 {
-    reserva novaReserva;
-
-    bannerHotel();
-
-    printf("Preencha as informacoes abaixo:\n\n");
-
-    printf("------------------------------------------------------------------------\n\n");
-    
-    printf("Digite seu nome: ");
-    fgets(novaReserva.nome, sizeof(novaReserva.nome), stdin);
-
-    printf("Digite sua idade: ");
-    scanf("%d", &novaReserva.idade);
-    getchar();
-
-    printf("Digite seu vulgo(Ex:Carreta Furacao): ");
-    fgets(novaReserva.vulgo, sizeof(novaReserva.vulgo), stdin);
-
-    printf("Digite a marca do Caminhao: ");
-    fgets(novaReserva.marcaCaminhao, sizeof(novaReserva.marcaCaminhao), stdin);
-
-    printf("Digite a placa do mesmo: ");
-    fgets(novaReserva.placa, sizeof(novaReserva.placa), stdin);
-
-    printf("Digite o cpf que ira se hospedar: ");
-    scanf("%d", &novaReserva.cpf);
-    getchar();
-
-    printf("Digite o numero para contato: ");
-    scanf("%d", &novaReserva.numeroCel);
-    getchar();
-
-    int andarValido = 0;
-
-    while(!andarValido)
-    {
-        printf("Diga o andar e o quarto(Ex: 1 3): ");
-        scanf("%d %d", &novaReserva.andar, &novaReserva.quarto);
-        getchar();
-
-        if (novaReserva.andar < 1 || novaReserva.andar > 20) 
-        {
-            printf("\nAndar invalido! Tente novamente!\n");
-            system("pause");
-            limpaTela();
-        } 
-        
-        else if (novaReserva.quarto < 1 || novaReserva.quarto > 14) 
-        {
-            printf("\nQuarto invalido! Tente novamente!\n");
-            system("pause");
-            limpaTela();
-        } 
-        
-        else 
-        {
-            andarValido = 1; // Valor de andar/quarto válido, sai do loop
-        }
-    }
-
-    reservas[numeroReserva] = novaReserva; 
-    numeroReserva++;
+    cadastroHospede();
 
     printf("\nReserva cadastrada com sucesso!\n");
     printf("===============================================\n");
@@ -377,8 +382,39 @@ int casoC()//Fun��o para fazer chekin
 
         if (simNao == 'N' || simNao == 'n')
         {
-            return 0;
+            printf("Voce gostaria de efetuar o Check-in sem reserva? (S para sim, N para nao): ");
+            scanf(" %c", &simNao);
+            getchar();
+            limpaTela();
+
+            if (simNao == 'N' || simNao == 'n')
+            {
+                limpaTela();
+                return 0;
+            }
+                
+                
+            else if (simNao == 'S' || simNao == 's')
+            {
+                cadastroHospede();
+                printf("\nReserva cadastrada com sucesso!\n");
+                printf("===============================================\n");
+                printf("Pressione Enter para continuar...");
+                getchar();
+                limpaTela();
+                break; 
+            }
+
+            else
+            {
+                printf("Comando invalido, tente novamente!\n");
+                getchar();
+                limpaTela();
+            }
+
+            
         }
+        
         else if (simNao == 'S' || simNao == 's')
         {
             if (numeroReserva == 0)
@@ -445,19 +481,8 @@ int casoC()//Fun��o para fazer chekin
 
         if (simNao == 'N' || simNao == 'n')
         {
-            printf("\nPois bem, estaremos retirando a sua reserva.\n");
-            
-            // Remover a reserva encontrada
-            for (int i = numeroCheckIN; i < numeroReserva; i++)
-            {
-                reservas[i] = reservas[i + 1];
-            }
-            numeroReserva--;
-            
-            printf("Reserva removida com sucesso!\n");
-            getchar();
             limpaTela();
-            break;
+            return 0;
         }
         else if (simNao == 'S' || simNao == 's')
         {
