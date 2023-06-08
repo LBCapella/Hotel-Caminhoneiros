@@ -111,6 +111,7 @@ typedef struct //typedef é usado para gerar um apelido ao novo tipo de variáve
  reserva reservas[MAX_RESERVAS];
  int numeroReserva = 0;
  reserva checkIN[MAX_RESERVAS];
+ int contagemCheckin = 0;
 
 void cadastroHospede()
 {
@@ -321,18 +322,6 @@ void casoA ()//Fun��o para mostrar os quartos disponiveis
     limpaTela();
 }
 
-void casoB()//Fun��o para fazer o cadastro do hospede
-{
-    cadastroHospede();
-
-    printf("\nReserva cadastrada com sucesso!\n");
-    printf("===============================================\n");
-    printf("Pressione Enter para voltar ao menu principal...");
-    getchar();
-    limpaTela();
-    
-}
-
 void casoG()
 {
     bannerHotel();
@@ -367,12 +356,13 @@ void casoG()
 int casoC()//Fun��o para fazer chekin
 {
     char simNao;
+    int verificaCpf;
+    reserva checkin;
+    int numeroCheckIN = -1; //para indicar que nenhuma reserva foi encontrada.
 
     while (1)
     {
         bannerHotel();
-        printf("Para efetuar o Checkin e' necessario ja possuir uma reserva.\n"
-               "Caso ainda nao tenha feito, por favor volte para o menu e efetue a mesma.\n");
         printf("Caso ja tenha reserva, digite 'S'. Caso contrario, digite 'N': ");
         
         scanf(" %c", &simNao);
@@ -397,12 +387,27 @@ int casoC()//Fun��o para fazer chekin
             else if (simNao == 'S' || simNao == 's')
             {
                 cadastroHospede();
-                printf("\nReserva cadastrada com sucesso!\n");
+                printf("Digite o CPF para confirmar o checkin: ");
+                scanf("%d",&verificaCpf);
+                getchar();
+                
+                for (int i = 0; i < numeroReserva; i++)
+                {
+                    checkin = reservas[i];
+                    if (verificaCpf == checkin.cpf)
+                    {
+                        checkIN[i] = checkin;
+                        contagemCheckin++;
+                        break;
+                    }
+                }
+
+                printf("\ncheckin realizado com sucesso!\n");
                 printf("===============================================\n");
                 printf("Pressione Enter para continuar...");
                 getchar();
                 limpaTela();
-                break; 
+                return 0; 
             }
 
             else
@@ -437,10 +442,6 @@ int casoC()//Fun��o para fazer chekin
         }
     }
     
-    int verificaCpf;
-    reserva checkin;
-    int numeroCheckIN = -1; //para indicar que nenhuma reserva foi encontrada.
-    
     while (numeroCheckIN == -1)
     {
         bannerHotel();
@@ -452,8 +453,6 @@ int casoC()//Fun��o para fazer chekin
         for (int i = 0; i < numeroReserva; i++)
         {
             checkin = reservas[i];
-            checkIN[i] = checkin;
-
             if (verificaCpf == checkin.cpf)
             {
                 numeroCheckIN = i;
@@ -481,16 +480,39 @@ int casoC()//Fun��o para fazer chekin
 
         if (simNao == 'N' || simNao == 'n')
         {
+            printf("\nPois bem, estaremos retirando a sua reserva.\n");
+            
+            // Remover a reserva encontrada
+            for (int i = numeroCheckIN; i < numeroReserva; i++)
+            {
+                reservas[i] = reservas[i + 1];
+            }
+            numeroReserva--;
+
+            printf("Reserva removida com sucesso!\n");
+            getchar();
             limpaTela();
-            return 0;
+            break;
         }
         else if (simNao == 'S' || simNao == 's')
         {
+
+            for (int i = 0; i < numeroReserva; i++)
+            {
+                checkin = reservas[i];
+                if (verificaCpf == checkin.cpf)
+                {
+                    checkIN[i] = checkin;
+                    contagemCheckin++;
+                    break;
+                }
+            }
             printf("\nCheck-in efetuado com sucesso!\n");
             getchar();
             limpaTela();
             break;
         }
+
         else
         {
             printf("Comando invalido, tente novamente!\n");
@@ -518,7 +540,7 @@ int casoD()
                 if (numeroReserva == 0)
                 {
                     printf("Nenhuma reserva encontrada...\n"
-                            "Pressione ENTER para voltar ao menu e efetuar a reserva.");
+                            "Pressione ENTER para voltar ao menu");
                     getchar();
                     limpaTela();
                     return 0;
@@ -549,9 +571,95 @@ int casoD()
                     break;
                 }
             }
-        
+    } while (1);
 
+    return 1;
+}
 
+int casoF()
+{
+    do
+    {
+        bannerHotel();
+        int verificaCpf;
+        char simNao;
+        int numeroCheckIN = -1;
+        reserva checkin;
+
+        printf("Gostaria de efetuar o Check-out('S' para sim, 'N' para nao)? ");
+        scanf("%c",&simNao);
+        getchar();
+
+        if (simNao == 'S' || simNao == 's')
+            {
+                if (contagemCheckin == 0)
+                {
+                    printf("Nenhum check-in encontrado...\n"
+                            "Pressione ENTER para voltar ao menu ");
+                    getchar();
+                    limpaTela();
+                    return 0;
+                }
+
+                else if (contagemCheckin != 0)
+                {
+                    while (numeroCheckIN == -1)
+                    {
+                        printf("Digite o numero do CPF feito no check-in: ");
+                        scanf("%d", &verificaCpf);
+                        getchar();
+                        for (int i = 0; i < numeroReserva; i++)
+                        {
+                            checkin = reservas[i];
+                            if (verificaCpf == checkin.cpf)
+                            {
+                                numeroCheckIN = i;
+                                break;
+                            }
+                        }
+
+                        if (numeroCheckIN == -1)
+                        {
+                            printf("\nCPF invalido, tente novamente!\n");
+                            getchar();
+                            limpaTela();
+                        }
+                    }
+
+                    //removendo reserva.
+                    for (int i = 0; i < numeroReserva; i++)
+                    {
+                        reserva r = reservas[i]; // uma variável para receber valores do reservas[i]
+                        if (verificaCpf == r.cpf)
+                        {
+                            for (int j = i; j < numeroReserva; j++)
+                            {
+                                reservas[j] = reservas[j + 1];
+                            }
+                            numeroReserva--;
+                        }
+                    }
+
+                    //removendo check-in.
+                    for (int i = 0; i < contagemCheckin; i++)
+                    {
+                        reserva c = checkIN[i]; // uma variável para receber valores do reservas[i]
+                        if (verificaCpf == c.cpf)
+                        {
+                            for (int j = i; j < contagemCheckin; j++)
+                            {
+                                checkIN[j] = checkIN[j + 1];
+                            }
+                            contagemCheckin--;
+                        }
+                    }
+
+                    printf("Checkout feito com sucesso!, obrigado senhor(a) %s\n",checkin.nome);
+                    getchar();
+                    limpaTela();
+                    break;
+                }
+            }
     } while (1);
 
     return 1;
@@ -569,7 +677,12 @@ int escolha(char opcao)//Fun��o para falar op��es de escolha
 
     case 'B':
     case 'b':
-        casoB();
+        cadastroHospede();
+        printf("\nReserva cadastrada com sucesso!\n");
+        printf("===============================================\n");
+        printf("Pressione Enter para voltar ao menu principal...");
+        getchar();
+        limpaTela();
         break;
 
     case 'C':
@@ -588,6 +701,7 @@ int escolha(char opcao)//Fun��o para falar op��es de escolha
 
     case 'F':
     case 'f':
+        casoF();
         break;
 
     case 'G':
