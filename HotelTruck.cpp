@@ -226,18 +226,57 @@ void tabelaQuartos()//Fun��o para mostrar o mapa do hotel
 
 }
 
-void quartos (char nome[], int valor,int primeiroAndar, int segundoAndar)//Fun��o para tabela de quartos
+void quartos(char nome[], int valor, int primeiroAndar, int segundoAndar)
 {
     bannerHotel();
 
-    printf("NOME DO QUARTO:%s\n",nome );
+    printf("==============================================\n");
+    printf("      DETALHES DO QUARTO - %s\n", nome);
+    printf("==============================================\n\n");
 
-    printf("PRECO: %d\n", valor);
+    printf("PRECO: %d R$\n\n", valor);
 
-    printf("Possui quartos do andar %d ao %d\n",primeiroAndar,segundoAndar);
+    printf("ANDARES DISPONIVEIS: %d ao %d\n\n", primeiroAndar, segundoAndar);
 
+    printf("DESCRICAO DO QUARTO:\n\n");
+
+    if (strcmp(nome, "Suite Dream Road") == 0)
+    {
+        printf("A Suite Dream Road e uma suite luxuosa com uma vista deslumbrante da cidade.\n");
+        printf("Possui uma cama king-size e um sofa-cama, acomodando ate 3 pessoas.\n");
+        printf("Alem disso, a suite inclui um banheiro privativo com banheira de hidromassagem,\n");
+        printf("sala de estar espacosa, TV de tela plana, minibar, cafeteira e Wi-Fi gratuito.\n");
+        printf("Os hospedes tambem tem acesso a academia, a piscina e ao servico de concierge do hotel.\n");
+    }
+    else if (strcmp(nome, "Suite Diesel Oasis") == 0)
+    {
+        printf("A Suite Diesel Oasis e uma suite tematica para os amantes de carros e velocidade.\n");
+        printf("Possui uma cama queen-size e um sofa-cama, acomodando ate 4 pessoas.\n");
+        printf("A suite apresenta decoracao moderna com detalhes inspirados no mundo automobilistico.\n");
+        printf("Inclui area de estar espacosa, banheiro privativo com chuveiro de hidromassagem,\n");
+        printf("TV de tela plana, minibar, mesa de trabalho e Wi-Fi gratuito.\n");
+        printf("Os hospedes tambem podem desfrutar do servico de quarto 24 horas e do acesso a piscina do hotel.\n");
+    }
+    else if (strcmp(nome, "Quarto Trucker's Haven") == 0)
+    {
+        printf("O Quarto Trucker's Haven e uma opcao aconchegante e confortavel para quem viaja a negocios.\n");
+        printf("Possui uma cama de casal, acomodando ate 2 pessoas.\n");
+        printf("O quarto inclui uma mesa de trabalho, TV a cabo, minibar e Wi-Fi gratuito.\n");
+        printf("Os hospedes tambem tem acesso a um business center, servico de lavanderia e cafe da manha incluso.\n");
+    }
+    else if (strcmp(nome, "Quarto Midnight Drive") == 0)
+    {
+        printf("O Quarto Midnight Drive e uma opcao economica para quem busca um lugar simples e confortavel.\n");
+        printf("Possui uma cama de solteiro, acomodando 1 pessoa.\n");
+        printf("O quarto inclui TV, banheiro privativo e Wi-Fi gratuito.\n");
+        printf("Os hospedes podem desfrutar do cafe da manha continental gratuito e do estacionamento do hotel.\n");
+    }
+    else
+    {
+        printf("Nao ha informacoes disponiveis sobre este quarto.\n");
+    }
+    printf("\n");
     tabelaQuartos();
-
     system("pause");
     limpaTela();
 }
@@ -350,8 +389,6 @@ void casoG()
     }
     limpaTela();
 }
-
-
 
 int casoC()//Fun��o para fazer chekin
 {
@@ -520,7 +557,6 @@ int casoC()//Fun��o para fazer chekin
             limpaTela();
         }
     }
-
     return 1;
 }
 
@@ -572,7 +608,6 @@ int casoD()
                 }
             }
     } while (1);
-
     return 1;
 }
 
@@ -664,7 +699,6 @@ int casoF()
 
     return 1;
 }
-
 
 int escolha(char opcao)//Fun��o para falar op��es de escolha
 {
