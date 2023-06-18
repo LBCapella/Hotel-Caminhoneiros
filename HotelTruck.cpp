@@ -785,7 +785,7 @@ void casoE()//cardapio do restaurante
 
     printf("========== MENU DO RESTAURANTE ==========\n\n");
     printf("----- Pratos -----              ----- Cervejas -----\n\n");
-    printf("1. Hamburguer do Estradeiro      7. Cerveja do Asfalto\n");
+    printf("1. Hamburguer do Estradeiro     7. Cerveja do Asfalto\n");
     printf("2. Bife do Caminhoneiro         8. Cerveja da Boleia\n");
     printf("3. Frango Grelhado do Rodo      9. Cerveja do Ponto\n");
     printf("4. Feijoada do Peso Pesado     10. Cerveja da Estrada\n");
