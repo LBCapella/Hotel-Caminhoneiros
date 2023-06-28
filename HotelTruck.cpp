@@ -1,5 +1,5 @@
-//VDC-Hotel-01
-//Carlos Gouveia, Kau� Cordeiro, Luan Capella, Pedro Gabriel
+//VDC-Hotel-04
+//Carlos Gouveia, Kau? Cordeiro, Luan Capella, Pedro Gabriel
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -84,18 +84,20 @@ void menuEscolha()//Funcao para o menu de escolhas
     bannerHotel();
 
     printf("\t# Para acessar a lista de quartos e o mapa do hotel digite : 'A'\n");
-    printf("\t# Para fazer reserva digite : 'B'\n");
-    printf("\t# Para fazer checkin digite : 'C'\n");
-    printf("\t# Para Cancelar a reserva digite : 'D'\n");
-    printf("\t# Para acessar o menu do restaurante digite : 'E'\n");
-    printf("\t# Para fazer checkout digite : 'F'\n");
-    printf("\t# Para Ver a lista de reservas digite : 'G'\n");
-    printf("\t# Para acessar a taxa de ocupacao do hotel digite : 'H'\n");
-    printf("\t# Para vizualizar a situacao de um determinado quarto : 'I'\n");
-    printf("\t# Para sair do programa digite : 'J'\n");
+    printf("\t# Para visualizar o mapa dos quartos digite : 'B'\n");
+    printf("\t# Para fazer reserva digite : 'C'\n");
+    printf("\t# Para fazer checkin digite : 'D'\n");
+    printf("\t# Para Cancelar a reserva digite : 'E'\n");
+    printf("\t# Para acessar o menu do restaurante digite : 'F'\n");
+    printf("\t# Para fazer checkout digite : 'G'\n");
+    printf("\t# Para Ver a lista de reservas digite : 'H'\n");
+    printf("\t# Para acessar a taxa de ocupacao do hotel digite : 'I'\n");
+    printf("\t# Para vizualizar a situacao de um determinado quarto : 'J'\n");
+    printf("\t# Para sair do programa digite : 'K'\n");
+    
 }
 
-typedef struct //typedef é usado para gerar um apelido ao novo tipo de variável, o apelido no caso é "reserva", assim não precisa usar sempre struct reserva
+typedef struct //typedef é usado para gerar um apelido ao novo tipo de variavel, o apelido no caso � "reserva", assim n�o precisa usar sempre struct reserva
 {
     char nome[50];
     int idade;
@@ -169,7 +171,7 @@ void cadastroHospede()
 
     tabelaQuartos();
     
-    int andarValido = 0;
+    int quartoValido = 0;
     
     if(numeroReserva == 20*14)
     {
@@ -182,37 +184,54 @@ void cadastroHospede()
 
     printf("------------------------------------------------------------------------\n\n");
 
-    while(!andarValido)
+    while(!quartoValido)
     {
-        printf("Diga o andar e o quarto(Ex: 1 3) ou digite (0 0) para voltar ao menu: ");
-        scanf("%d %d", &novaReserva.andar, &novaReserva.quarto);
-        getchar();
-
-        if (novaReserva.andar == 0)
+        while(1)
         {
-            printf("Voltando ao menu!\n");
+            printf("Escolha o andar ou digite 0 para voltar ao menu: ");
+            scanf("%d", &novaReserva.andar);
             getchar();
-            limpaTela();
-            break;
-        }
 
-        else if (novaReserva.andar < 1 || novaReserva.andar > 20) 
-        {
-            printf("\nAndar invalido! Tente novamente!\n\n");
-        } 
-        
-        else if (novaReserva.quarto < 1 || novaReserva.quarto > 14) 
-        {
-            printf("\nQuarto invalido! Tente novamente!\n\n");
-        } 
-        
-        else 
-        {
-            andarValido = 1; // Valor de andar/quarto valido, sai do loop
+            if (novaReserva.andar == 0)
+            {
+                printf("Voltando ao menu!\n");
+                getchar();
+                limpaTela();
+                break;
+            }
+
+            if (novaReserva.andar < 1 || novaReserva.andar > 20) 
+            {
+                printf("\nAndar invalido! Tente novamente!\n\n");
+            }
+
+            else
+                break;
         }
+        
+        if (novaReserva.andar == 0)
+            break;
+
+        while(quartoValido != 1)
+        {
+            printf("Escolha o quarto: ");
+            scanf("%d", &novaReserva.quarto);
+            getchar(); 
+            
+            if (novaReserva.quarto < 1 || novaReserva.quarto > 14) 
+            {
+                printf("\nQuarto invalido! Tente novamente!\n\n");
+            } 
+            
+            else 
+            {
+                quartoValido = 1; // Valor de andar/quarto valido, sai do loop
+            }
+        }
+        
     }
 
-    if (andarValido == 1)
+    if (quartoValido == 1)
     {
         printf("Digite seu nome: ");
         fgets(novaReserva.nome, sizeof(novaReserva.nome), stdin);
@@ -249,7 +268,7 @@ void cadastroHospede()
         tabelaQuartos();
         printf("\nReserva cadastrada com sucesso!\n");
         printf("===============================================\n");
-        printf("Pressione Enter para voltar ao menu principal...");
+        printf("Pressione Enter para continuar...");
         getchar();
         limpaTela();
     }
@@ -329,7 +348,6 @@ void casoA ()//Funcao para mostrar os quartos disponiveis
         printf("2.Suite Diesel Oasis    ||       250,00 R$      ||        VAGAS           #\n");
         printf("3.Quarto Trucker's Haven||       180,00 R$      ||        VAGAS           #\n");
         printf("4.Quarto Midnight Drive ||       150,00 R$      ||        VAGAS           #\n");
-        printf("5.Ver o mapa de quartos, vazios e vagos do Hotel.                         #\n");
         
         printf("Escolha uma para mais detalhes (0 para voltar ao menu): ");
         scanf("%d",&detalhesQuarto);
@@ -375,13 +393,6 @@ void casoA ()//Funcao para mostrar os quartos disponiveis
             quartos(nomeQuarto, preco, primeiroAndar, segundoAndar);
             break;
             
-        case 5:
-        	limpaTela();
-        	tabelaQuartos();
-        	system("pause");
-        	limpaTela();
-        	break;
-            
         default:
             printf("\nOpcao digitada invalida, por favor tente novamente.\n\n");
             system("pause");
@@ -392,7 +403,7 @@ void casoA ()//Funcao para mostrar os quartos disponiveis
     limpaTela();
 }
 
-void casoG()
+void casoH() //Lista de reservas
 {
     bannerHotel();
 
@@ -421,7 +432,7 @@ void casoG()
     limpaTela();
 }
 
-int casoC()//Funcao para fazer chekin
+int casoD()//Funcao para fazer chekin
 {
     char simNao;
     int verificaCpf;
@@ -465,6 +476,12 @@ int casoC()//Funcao para fazer chekin
                 printf("                              FAZER CHECK-IN                            \n\n\n");
                 printf("========================================================================\n\n");
                 cadastroHospede();
+                tabelaQuartos();
+                limpaTela();
+
+                printf("========================================================================\n\n\n");
+                printf("                              FAZER CHECK-IN                            \n\n\n");
+                printf("========================================================================\n\n");
                 printf("Digite o CPF para confirmar o checkin: ");
                 scanf("%d",&verificaCpf);
                 getchar();
@@ -480,6 +497,11 @@ int casoC()//Funcao para fazer chekin
                     }
                 }
 
+                limpaTela();
+                printf("========================================================================\n\n\n");
+                printf("                              FAZER CHECK-IN                            \n\n\n");
+                printf("========================================================================\n\n");
+                tabelaQuartos();
                 printf("\ncheckin realizado com sucesso!\n");
                 printf("===============================================\n");
                 printf("Pressione Enter para continuar...");
@@ -494,8 +516,7 @@ int casoC()//Funcao para fazer chekin
                 getchar();
                 limpaTela();
             }
-
-            
+   
         }
         
         else if (simNao == 'S' || simNao == 's')
@@ -612,7 +633,7 @@ int casoC()//Funcao para fazer chekin
     return 1;
 }
 
-int casoD()//menu de cancelamento de uma reserva
+int casoE()//menu de cancelamento de uma reserva
 {
     do
     {
@@ -654,14 +675,28 @@ int casoD()//menu de cancelamento de uma reserva
                     numeroReserva--;
                 }
             }
-        
+
+            for (int i = 0; i < contagemCheckin; i++)
+                {
+                    reserva c = checkIN[i];
+                    if (verificaCpf == c.cpf)
+                    {
+                        for (int j = i; j < contagemCheckin; j++)
+                        {
+                            checkIN[j] = checkIN[j + 1];
+                        }
+                        
+                    }
+                }
+            break;
+        } 
+
         if (simNao == 'N' || simNao == 'n')
         {
             limpaTela();
             return 0;
         }
 
-        } 
     } while (1);
 
     printf("Reserva removida com sucesso!\n");
@@ -672,7 +707,7 @@ int casoD()//menu de cancelamento de uma reserva
 }
 
 
-int casoF()//menu do check-out 
+int casoG()//menu do check-out 
 {
     do
     {
@@ -773,7 +808,7 @@ int casoF()//menu do check-out
     return 1;
 }
 
-void casoE()//cardapio do restaurante
+void casoF()//cardapio do restaurante
 {
     printf("========================================================================\n\n\n");
     printf("                             MENU RESTAURANTE                           \n\n\n");
@@ -797,16 +832,23 @@ void casoE()//cardapio do restaurante
     limpaTela();
 }
 
-void casoH()//Taxa de Ocupacao
+void casoI()//Taxa de Ocupacao
 {
+    int diferenca =numeroReserva-(numeroReserva - contagemCheckin);
+    float taxaOcupacaoReserva;
     printf("========================================================================\n\n\n");
     printf("                             TAXA DE OCUPACAO                           \n\n\n");
     printf("========================================================================\n\n");
     tabelaQuartos();
     printf("\n-----------------------------------------------------\n");
-    float taxaOcupacaoCheck =  (contagemCheckin/(float)MAX_RESERVAS)*100;//variável para receber a porcentagem.
-    float taxaOcupacaoReserva =  (numeroReserva/(float)MAX_RESERVAS)*100;
-    //caso não haja reservas
+    float taxaOcupacaoCheck =  (contagemCheckin/(float)MAX_RESERVAS)*100;//variavel para receber a porcentagem.
+    if (contagemCheckin == 0)
+        taxaOcupacaoReserva =  (numeroReserva/(float)MAX_RESERVAS)*100;
+    
+    else
+        taxaOcupacaoReserva =  ((numeroReserva-diferenca)/(float)MAX_RESERVAS)*100;
+
+    //caso nao haja reservas
     if (numeroReserva == 0)
     {
         printf("Nao ha reservas nem checkin cadastrados no momento, digite ENTER para voltar ao menu.");
@@ -817,7 +859,12 @@ void casoH()//Taxa de Ocupacao
     else
     {
         printf("A taxa de ocupacao atual do hotel eh %d/%d(%.2f%%)\n\n",contagemCheckin,MAX_RESERVAS,taxaOcupacaoCheck);
-        printf("A taxa de reservas atual do hotel eh %d/%d(%.2f%%)\n\n",numeroReserva,MAX_RESERVAS,taxaOcupacaoReserva);
+        if (contagemCheckin == 0)
+            printf("A taxa de reservas atual do hotel eh %d/%d(%.2f%%)\n\n",numeroReserva,MAX_RESERVAS,taxaOcupacaoReserva);
+
+        else
+            printf("A taxa de reservas atual do hotel eh %d/%d(%.2f%%)\n\n",(numeroReserva-diferenca),MAX_RESERVAS,taxaOcupacaoReserva);
+        
         
 		printf("digite ENTER para voltar ao menu!");
         getchar();
@@ -825,7 +872,7 @@ void casoH()//Taxa de Ocupacao
     }
 }
 
-void casoI()//Status do quarto
+void casoJ()//Status do quarto
 {
     char simNao;
     while (1)
@@ -839,52 +886,48 @@ void casoI()//Status do quarto
         printf("\n-----------------------------------------------------\n");
 
         //recebe o valor dado pelo usuario
-        printf("\ndigite o quarto (e seu respectivo andar) que deseja verificar (EX: 20 3): ");
+        printf("\ndigite o andar (e seu respectivo quarto) que deseja verificar (EX: 20 3): ");
         scanf("%d %d", &verifica.andar, &verifica.quarto);
         getchar();
 
-        int encontrado = 0; // Indicador se a reserva foi encontrada(flag)
+        int encontrado = 0; // Indicador se a reserva foi encontrada (flag)
 
-        //caso nao haja reserva no quarto selecionado
-        if (numeroReserva == 0)
+        // Verificar se existe reserva para o quarto selecionado
+        for (int i = 0; i < numeroReserva; i++)
         {
-            strcpy(verifica.status, "Quarto Vazio");
-        }
-
-        else
-        {
-            for (int i = 0; i < numeroReserva; i++)
+            reserva r = reservas[i];
+            if (verifica.andar == r.andar && verifica.quarto == r.quarto)
             {
-                reserva r = reservas[i];
-                if (verifica.andar == r.andar && verifica.quarto == r.quarto)
-                {
-                    encontrado = 1; // Marcar como encontrado
-
-                    for (int j = 0; j < contagemCheckin; j++)
-                    {
-                        reserva c = checkIN[j];
-                        if (verifica.andar == c.andar && verifica.quarto == c.quarto)
-                        {
-                            verifica = checkIN[j];
-                            strcpy(verifica.status, "Ocupado");
-                            break; // Sair do loop interno
-                        }
-                    }
-
-                    if (strcmp(verifica.status, "Ocupado") != 0)
-                    {
-                        verifica = reservas[i];
-                        strcpy(verifica.status, "Reservado");
-                    }
-
-                    break; // Sair do loop externo
-                }
+                encontrado = 1; // Marcar como encontrado
+                verifica = r; // Atribuir informações da reserva a "verifica"
+                break; // Sair do loop
             }
         }
-        //flag para atualizar o status do verifica
+
         if (!encontrado)
         {
             strcpy(verifica.status, "Quarto Vago");
+        }
+        else
+        {
+            int ocupado = 0; // Indicador se o quarto está ocupado (flag)
+
+            // Verificar se o quarto está ocupado (check-in)
+            for (int j = 0; j < numeroReserva; j++)
+            {
+                reserva c = checkIN[j];
+                if (verifica.andar == c.andar && verifica.quarto == c.quarto)
+                {
+                    ocupado = 1; // Marcar como ocupado
+                    strcpy(verifica.status, "Ocupado");
+                    break; // Sair do loop
+                }
+            }
+
+            if (!ocupado)
+            {
+                strcpy(verifica.status, "Reservado");
+            }
         }
 
         if (strcmp(verifica.status, "Quarto Vago") == 0)
@@ -892,7 +935,6 @@ void casoI()//Status do quarto
             printf("Status: %s\n", verifica.status);
             printf("---------------------------------------------------------\n");
         }
-
         else
         {
             printf("nome: %s\n", verifica.nome);
@@ -903,7 +945,8 @@ void casoI()//Status do quarto
             printf("Status: %s\n", verifica.status);
             printf("---------------------------------------------------------\n");
         }
-        // condicao de sim e nao para voltar ao menu ou permanecer no looping
+
+        // Condicao de sim e nao para voltar ao menu ou permanecer no looping
         printf("\nDeseja voltar ao menu? S/N: ");
         scanf(" %c", &simNao);
         getchar();
@@ -917,6 +960,7 @@ void casoI()//Status do quarto
     }
 }
 
+
 int escolha(char opcao)//Funcao para falar opcoes de escolha
 {
     switch (opcao)
@@ -928,15 +972,22 @@ int escolha(char opcao)//Funcao para falar opcoes de escolha
 
     case 'B':
     case 'b':
+        limpaTela();
         printf("========================================================================\n\n\n");
-        printf("                              FAZER RESERVA                             \n\n\n");
+        printf("                              MAPA DE QUARTOS                           \n\n\n");
         printf("========================================================================\n\n");
-        cadastroHospede();
+        tabelaQuartos();
+        printf("Pressione qualquer tecla para voltar ao menu");
+        getchar();
+        limpaTela();
         break;
 
     case 'C':
     case 'c':
-        casoC();
+        printf("========================================================================\n\n\n");
+        printf("                              FAZER RESERVA                             \n\n\n");
+        printf("========================================================================\n\n");
+        cadastroHospede();
         break;
 
     case 'D':
@@ -957,12 +1008,12 @@ int escolha(char opcao)//Funcao para falar opcoes de escolha
     case 'G':
     case 'g':
         casoG();
-        break;    
+        break;
 
     case 'H':
     case 'h':
         casoH();
-        break;
+        break;  
 
     case 'I':
     case 'i':
@@ -971,7 +1022,12 @@ int escolha(char opcao)//Funcao para falar opcoes de escolha
 
     case 'J':
     case 'j':
-        return 0;    
+        casoJ();
+        break;
+    
+    case 'K':
+    case 'k':
+        return 0;
 
     default:
         printf("Opcao digitada invalida, por favor tente novamente.\n");
